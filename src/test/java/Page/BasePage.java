@@ -43,9 +43,8 @@ public class BasePage {
         return waitUntilElementDisplayed(element, 10);
     }
 
-   /* public WebElement waitUntilElementLoad(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeout);
-        return wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOf(element));
-        // wait.until(ExpectedConditions.visibilityOf(element));
-    }*/
+    public WebElement waitUntilElementClickable(WebElement element, int timeout) {
+        WebElement webElement = (new WebDriverWait(webDriver, timeout)).until(ExpectedConditions.elementToBeClickable(element));
+        return waitUntilElementDisplayed(webElement, 10);
+    }
 }
