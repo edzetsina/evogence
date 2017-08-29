@@ -4,11 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
-import java.io.File;
-
-import static java.lang.Thread.sleep;
 
 
 /**
@@ -16,54 +12,52 @@ import static java.lang.Thread.sleep;
  */
 public class ContentLibraryPage extends BasePage {
 
-    @FindBy(css = ".menu_bottom_bg>table>tbody>tr>td")
-    private WebElement menuBar;
-    @FindBy(xpath = ".//*[@id='header']/table/tbody/tr[1]/td[4]/div/a[7]")
+    @FindBy(id = "header")
+    private WebElement siteHeader;
+    @FindBy(xpath = "//div[@id='header']//*[text()='Logout']")
     private WebElement logOutButton;
     @FindBy(xpath = "//div[@id='menuBar']//*[text()='Content Library']")
     private WebElement contentLibraryButton;
-    @FindBy(xpath = ".//*[@id='menu_2_22']/a[1]")
+    @FindBy(xpath = "//div[@id='menu_2_22']//a[1]")
     private WebElement manageClassesMenuButton;
-    @FindBy(xpath = "//div[@id='site_content']//div//td//tbody//tr//td//a//img")
+    @FindBy(xpath = "//*[@title='Add new Class']")
     private WebElement addClassIcon;
     @FindBy(xpath = "//input[@class='text']")
-    private WebElement addClassNameField;
-    @FindBy (xpath = "//*[@id='adjustTable']//tr//*[@class='btn' and text()='Save']")
+    private WebElement iFrameNameField;
+    @FindBy(xpath = "//button[@title='Save']")
     private WebElement iFarameSaveButton;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test class']")
+    @FindBy(xpath = "//span[@class='pointer' and text()='Test class']")
     private WebElement testClass;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='roundedBox']//span[4]//nobr//img[1]")
+    @FindBy(xpath = "//div[@class='roundedBox']//span[4]//*[@title='Add Category']")
     private WebElement addCategoryIcon;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test Category']")
+    @FindBy(xpath = "//span[@class='pointer' and text()='Test Category']")
     private WebElement testCategory;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='roundedBox']//span[5]//nobr//img[1]")
+    @FindBy(xpath = "//div[@class='roundedBox']//span[5]//*[@title='Add Sub-Category']")
     private WebElement addSubCategoryIcon;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test SubCategory']")
+    @FindBy(xpath = "//span[@class='pointer' and text()='Test SubCategory']")
     private WebElement testSubCategory;
-    @FindBy (xpath = "//*[@id='site_content']//*[@class='roundedBox']//span[6]//nobr//img[3]")
+    @FindBy(xpath = "//div[@class='roundedBox']//span[6]//*[@title='View campaigns']")
     private WebElement viewCampaignIcon;
-    @FindBy (xpath = "//*[@title='Add campaign']")
+    @FindBy(xpath = "//*[@title='Add campaign']")
     private WebElement addCampaignIcon;
-    @FindBy (xpath = ".//*[@id='second']//*[text()='Test Campaign']")
+    @FindBy(xpath = "//*[text()='Test Campaign']")
     private WebElement testCampaign;
-    @FindBy (xpath = "//*[@title='Manage Campaign Items']")
+    @FindBy(xpath = "//tr[@class='row1']//*[@title='Manage Campaign Items']")
     private WebElement manageCampaignItemsIcon;
-
-    @FindBy (xpath = "//*[@title='Add new Item']")
+    @FindBy(xpath = "//div[@class='mb5']//*[@title='Add new Item']")
     private WebElement addNewItemIcon;
-    @FindBy (xpath = "//input[@id='file1']")
+    @FindBy(xpath = "//input[@id='file1']")
     private WebElement browseButtonField;
-
-    @FindBy (xpath = "//input[@id='title1']")
+    @FindBy(xpath = "//input[@id='title1']")
     private WebElement iFrameTitleField;
-
-
+    @FindBy(xpath = "//div[@id='8']")
+    private WebElement createdItem;
 
 
     public ContentLibraryPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
-        waitUntilElementDisplayed(menuBar, 20);
+        waitUntilElementDisplayed(siteHeader, 20);
     }
 
     public LoginPage logOut() {
@@ -72,11 +66,11 @@ public class ContentLibraryPage extends BasePage {
     }
 
     public boolean isPageLoaded() {
-        return menuBar.isDisplayed();
+        return siteHeader.isDisplayed();
     }
 
     public ContentLibraryPage openManageClassesTab() {
-        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath(".//*[@id='menuBar']/ul/li[2]/a"))).perform();
+        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//div[@id='menuBar']//*[text()='Content Library']"))).perform();
         waitUntilElementClickable(manageClassesMenuButton, 1).click();
         waitUntilElementDisplayed(addClassIcon);
         return this;
@@ -86,7 +80,7 @@ public class ContentLibraryPage extends BasePage {
 
         addClassIcon.click();
         webDriver.switchTo().frame("iFrameToAdjust");
-        waitUntilElementDisplayed(addClassNameField, 10).sendKeys("Test class");
+        waitUntilElementDisplayed(iFrameNameField, 10).sendKeys("Test class");
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
         waitUntilElementDisplayed(testClass, 10);
@@ -96,34 +90,43 @@ public class ContentLibraryPage extends BasePage {
     public boolean isCreatedClassDisplay() {
         return testClass.isDisplayed();
     }
+
     public boolean isCreatedCategoryDisplay() {
         return testCategory.isDisplayed();
     }
+
     public boolean isCreatedSubCategoryDisplay() {
         return testSubCategory.isDisplayed();
     }
+
     public boolean isCreatedCampaignDisplay() {
         return testCampaign.isDisplayed();
     }
 
+    public boolean isAddedItemDisplay() {
+        return createdItem.isDisplayed();
+    }
+
 
     public ContentLibraryPage openClassMenuIcons() {
-        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath(".//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test class']"))).perform();
+        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//span[@class='pointer' and text()='Test class']"))).perform();
         return this;
     }
+
     public ContentLibraryPage openCategoryMenuIcons() {
-        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test Category']"))).perform();
+        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//span[@class='pointer' and text()='Test Category']"))).perform();
         return this;
     }
+
     public ContentLibraryPage openSubCategoryMenuIcons() {
-        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//*[@id='site_content']//*[@class='tree']//li[2]//*[text()='Test SubCategory']"))).perform();
+        new Actions(webDriver).moveToElement(webDriver.findElement(By.xpath("//span[@class='pointer' and text()='Test SubCategory']"))).perform();
         return this;
     }
 
     public void createCategoryInContentLibrary() {
         addCategoryIcon.click();
         webDriver.switchTo().frame("iFrameToAdjust");
-        waitUntilElementDisplayed(addClassNameField, 10).sendKeys("Test Category");
+        waitUntilElementDisplayed(iFrameNameField, 10).sendKeys("Test Category");
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
         waitUntilElementDisplayed(testCategory, 10);
@@ -132,7 +135,7 @@ public class ContentLibraryPage extends BasePage {
     public void createSubCategoryInContentLibrary() {
         addSubCategoryIcon.click();
         webDriver.switchTo().frame("iFrameToAdjust");
-        waitUntilElementDisplayed(addClassNameField, 10).sendKeys("Test SubCategory");
+        waitUntilElementDisplayed(iFrameNameField, 10).sendKeys("Test SubCategory");
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
         waitUntilElementDisplayed(testSubCategory, 10);
@@ -148,21 +151,23 @@ public class ContentLibraryPage extends BasePage {
     public void createNewCampaign() {
         waitUntilElementDisplayed(addCampaignIcon, 10).click();
         webDriver.switchTo().frame("iFrameToAdjust");
-        waitUntilElementDisplayed(addClassNameField, 10).sendKeys("Test Campaign");
+        waitUntilElementDisplayed(iFrameNameField, 10).sendKeys("Test Campaign");
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
         waitUntilElementDisplayed(testCampaign, 10);
     }
 
-    public void uploadFileToContentLibraryCampaign() throws InterruptedException {
+    public void uploadFileToContentLibraryCampaign() {
         waitUntilElementDisplayed(manageCampaignItemsIcon, 10).click();
         addNewItemIcon.click();
         webDriver.switchTo().frame("iFrameToAdjust");
         waitUntilElementDisplayed(browseButtonField, 10);
         webDriver.findElement(By.id("file1")).sendKeys("C:\\Users\\edzet\\projects\\evogence\\src\\test\\resources\\Raccoon.jpg");
+        webDriver.findElement(By.id("timeplay1")).clear();
         webDriver.findElement(By.id("timeplay1")).sendKeys("00:00:20");
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
+        waitUntilElementDisplayed(createdItem, 10);
     }
 }
 

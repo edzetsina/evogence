@@ -3,21 +3,19 @@ package test;
 import Page.LoginPage;
 import Page.ContentLibraryPage;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static java.lang.Thread.sleep;
 
 
 public class ContentLibraryPageTests {
 
     public WebDriver webDriver;
-    public String username="admin";
-    public String password="password";
+    public String username = "admin";
+    public String password = "password";
     ContentLibraryPage contentLibraryPage;
     LoginPage loginPage;
 
@@ -29,7 +27,7 @@ public class ContentLibraryPageTests {
             webDriver = new ChromeDriver();
         }
         if (BrowserType.toLowerCase().equals("firefox")) {
-            FirefoxDriverManager.getInstance().setup();
+            System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
             webDriver = new FirefoxDriver();
         }
         webDriver.navigate().to("http://192.168.101.92");
@@ -39,7 +37,7 @@ public class ContentLibraryPageTests {
 
 
     @AfterClass
-    public  void afterClass() {
+    public void afterClass() {
         webDriver.quit();
     }
 
@@ -76,11 +74,11 @@ public class ContentLibraryPageTests {
         Assert.assertTrue(contentLibraryPage.isCreatedCampaignDisplay(), "New Campaign is not created");
         Assert.assertTrue(contentLibraryPage.isPageLoaded(), "Page is not loaded");
     }
+
     @Test(priority = 5)
-    public void testAddItemToCampaign() throws InterruptedException {
-        contentLibraryPage.openManageClassesTab();
-        contentLibraryPage.openSubCategoryMenuIcons();
-        contentLibraryPage.openCampaignPage();
+    public void testAddItemToCampaign() {
         contentLibraryPage.uploadFileToContentLibraryCampaign();
+        Assert.assertTrue(contentLibraryPage.isAddedItemDisplay(), "Item is not added");
+        Assert.assertTrue(contentLibraryPage.isPageLoaded(), "Page is not loaded");
     }
 }

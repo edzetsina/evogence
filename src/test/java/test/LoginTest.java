@@ -10,7 +10,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static java.lang.Thread.sleep;
 
 public class LoginTest {
 
@@ -53,7 +52,7 @@ public class LoginTest {
     /**
      * Can not make any tests, because cannot highlight element!!! Need developer to fix it!
      */
- /*   @DataProvider
+    @DataProvider
     public  static Object [] []  negativeTestEnvironment() {
         return new Object[][] {
                 {"", "", "Your login or password is incorrect!"},
@@ -71,7 +70,7 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded");
         Assert.assertTrue(loginPage.isInvalidCredentialMsg(), "Error message was not displayed on login page");
         Assert.assertEquals(loginPage.getErrorMsgText(), expectedErrorMsg, "Error msg has wrong test");
-    }*/
+    }
 
     @Test
     public  void testLogOut(){

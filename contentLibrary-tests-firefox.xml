@@ -5,7 +5,7 @@
 
         <parameter name="BrowserType" value="Firefox"/>
         <classes>
-            <class name="test.MainPageTests" />
+            <class name="test.ContentLibraryPageTests" />
         </classes>
     </test>
 </suite>
