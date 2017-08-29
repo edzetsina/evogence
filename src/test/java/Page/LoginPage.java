@@ -32,7 +32,7 @@ public class LoginPage extends BasePage {
         }
         else {
 
-            return (T) PageFactory.initElements(webDriver, MainPage.class);
+            return (T) PageFactory.initElements(webDriver, ContentLibraryPage.class);
         }
     }
 

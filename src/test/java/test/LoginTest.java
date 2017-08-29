@@ -1,7 +1,7 @@
 package test;
 
 import Page.LoginPage;
-import Page.MainPage;
+import Page.ContentLibraryPage;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -44,7 +44,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertEquals(loginPage.getPageTitle(), ":: RPN :: Login Page", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "http://192.168.101.92/", "Wrong URL on Login Page");
-        MainPage mainPage = loginPage.login(username, password);
+        ContentLibraryPage mainPage = loginPage.login(username, password);
         Assert.assertTrue(mainPage.isPageLoaded(), "Menu bar is not displayed");
         Assert.assertEquals(mainPage.getPageTitle(), ":: RPN :: Channels", "Main page title is wrong");
     }
@@ -78,7 +78,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertEquals(loginPage.getPageTitle(), ":: RPN :: Login Page", "Main page title is wrong");
         Assert.assertEquals(loginPage.getPageURL(), "http://192.168.101.92/", "Wrong URL on Login Page");
-        MainPage mainPage = loginPage.login(username, password);
+        ContentLibraryPage mainPage = loginPage.login(username, password);
         Assert.assertTrue(mainPage.isPageLoaded(), "Menu bar is not displayed");
         Assert.assertEquals(mainPage.getPageTitle(), ":: RPN :: Channels", "Main page title is wrong");
         loginPage = mainPage.logOut();
