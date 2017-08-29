@@ -49,9 +49,6 @@ public class LoginTest {
     }
 
 
-    /**
-     * Can not make any tests, because cannot highlight element!!! Need developer to fix it!
-     */
     @DataProvider
     public  static Object [] []  negativeTestEnvironment() {
         return new Object[][] {
