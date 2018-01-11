@@ -76,9 +76,22 @@ public class ContentLibraryPageTests {
     }
 
     @Test(priority = 5)
-    public void testAddItemToCampaign() {
-        contentLibraryPage.uploadFileToContentLibraryCampaign();
-        Assert.assertTrue(contentLibraryPage.isAddedItemDisplay(), "Item is not added");
+    public void testAddImageToCampaign() {
+        contentLibraryPage.openManageClassesTab();
+        contentLibraryPage.openSubCategoryMenuIcons();
+        contentLibraryPage.openCampaignPage();
+        contentLibraryPage.uploadImageToContentLibraryCampaign();
+        Assert.assertTrue(contentLibraryPage.isAddedItemDisplay(), "Image is not added");
         Assert.assertTrue(contentLibraryPage.isPageLoaded(), "Page is not loaded");
     }
+    @Test(priority = 5)
+    public void testAddVideoToCampaign() {
+        contentLibraryPage.openManageClassesTab();
+        contentLibraryPage.openSubCategoryMenuIcons();
+        contentLibraryPage.openCampaignPage();
+        contentLibraryPage.uploadVideoToContentLibraryCampaign();
+        Assert.assertTrue(contentLibraryPage.isAddedItemDisplay(), "Video is not added");
+        Assert.assertTrue(contentLibraryPage.isPageLoaded(), "Page is not loaded");
+    }
+
 }

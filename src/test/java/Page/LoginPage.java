@@ -15,6 +15,11 @@ public class LoginPage extends BasePage {
     private WebElement loginButton;
     @FindBy(xpath = "//*[text()='Your login or password is incorrect!']")
     private WebElement invalidCredentialsErrorMsg;
+    @FindBy(id = "header")
+    private WebElement siteHeader;
+
+    @FindBy(id = "appliance_name")
+    private WebElement applianceName;
 
     public LoginPage (WebDriver webDriver) {
         super(webDriver);
@@ -29,10 +34,18 @@ public class LoginPage extends BasePage {
         if (isElementDisplayed(loginButton, 4)) {
             return (T) this;
         }
+        if (isElementDisplayed(applianceName,5)) {
+            return (T) PageFactory.initElements(webDriver, FirstLoginPage.class);
+        }
+        if (isElementDisplayed(siteHeader,5)) {
+            return (T) PageFactory.initElements(webDriver, ChannelPage.class);
+        }
+
         else {
 
-            return (T) PageFactory.initElements(webDriver, ContentLibraryPage.class);
+            return (T) PageFactory.initElements(webDriver, ChannelPage.class);
         }
+
     }
 
     public boolean isInvalidCredentialMsg() {

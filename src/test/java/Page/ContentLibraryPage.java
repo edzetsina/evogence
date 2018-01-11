@@ -14,8 +14,6 @@ public class ContentLibraryPage extends BasePage {
 
     @FindBy(id = "header")
     private WebElement siteHeader;
-    @FindBy(xpath = "//div[@id='header']//*[text()='Logout']")
-    private WebElement logOutButton;
     @FindBy(xpath = "//div[@id='menuBar']//*[text()='Content Library']")
     private WebElement contentLibraryButton;
     @FindBy(xpath = "//div[@id='menu_2_22']//a[1]")
@@ -52,6 +50,8 @@ public class ContentLibraryPage extends BasePage {
     private WebElement iFrameTitleField;
     @FindBy(xpath = "//div[@id='8']")
     private WebElement createdItem;
+    @FindBy (id = "_error_subwindow")
+    private WebElement errorIFrameMessage;
 
 
     public ContentLibraryPage(WebDriver webDriver) {
@@ -59,12 +59,6 @@ public class ContentLibraryPage extends BasePage {
         PageFactory.initElements(webDriver, this);
         waitUntilElementDisplayed(siteHeader, 20);
     }
-
-    public LoginPage logOut() {
-        waitUntilElementDisplayed(logOutButton, 5).click();
-        return PageFactory.initElements(webDriver, LoginPage.class);
-    }
-
     public boolean isPageLoaded() {
         return siteHeader.isDisplayed();
     }
@@ -157,7 +151,7 @@ public class ContentLibraryPage extends BasePage {
         waitUntilElementDisplayed(testCampaign, 10);
     }
 
-    public void uploadFileToContentLibraryCampaign() {
+    public void uploadImageToContentLibraryCampaign() {
         waitUntilElementDisplayed(manageCampaignItemsIcon, 10).click();
         addNewItemIcon.click();
         webDriver.switchTo().frame("iFrameToAdjust");
@@ -168,6 +162,16 @@ public class ContentLibraryPage extends BasePage {
         iFarameSaveButton.click();
         webDriver.switchTo().defaultContent();
         waitUntilElementDisplayed(createdItem, 10);
+    }
+    public void uploadVideoToContentLibraryCampaign() {
+        waitUntilElementDisplayed(manageCampaignItemsIcon, 10).click();
+        addNewItemIcon.click();
+        webDriver.switchTo().frame("iFrameToAdjust");
+        waitUntilElementDisplayed(browseButtonField, 10);
+        webDriver.findElement(By.id("file1")).sendKeys("C:\\Users\\edzet\\Desktop\\Content\\Video types\\Trailers\\Deadpool2_HD.mp4");
+        iFarameSaveButton.click();
+        webDriver.switchTo().defaultContent();
+        waitUntilElementDisplayed(createdItem, 20);
     }
 }
 
